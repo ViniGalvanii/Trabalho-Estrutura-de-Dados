@@ -2,6 +2,7 @@ from cliente import Cliente
 from ListaEncadeada import ListaEncadeada
 from produto import Produto
 
+
 def exibir_menu():
     print("\n===== MENU ESTOQUE =====")
     print("1 - Cadastrar cliente")
@@ -25,8 +26,7 @@ def main():
 
     produtos = ListaEncadeada()
     proximo_id_produto = 1
-    
-    
+
     while True:
         exibir_menu()
 
@@ -35,6 +35,8 @@ def main():
         except:
             print("⚠️ Entrada inválida! Digite um número.")
             continue
+
+        # ================= CLIENTES =================
 
         if opcao == 1:
             nome = input("Digite o nome do cliente: ").strip()
@@ -55,30 +57,43 @@ def main():
             print("\n--- Lista de Clientes ---")
             clientes.listar()
 
+        # ================= PRODUTOS =================
+
         elif opcao == 3:
-            while True:
+            nome = input("Digite o nome do produto: ").strip()
 
-             nome = input("Digite o nome do produto: ").strip()
-
-             if nome == "":
+            if nome == "":
                 print("⚠️ Nome não pode ser vazio!")
-                continue           
-             try:
+                continue
+
+            try:
                 quantidade = int(input("Digite a quantidade do produto: "))
-                preco = float(input("Digite o preço do produto: "))     
-             except:
+                preco = float(input("Digite o preço do produto: "))
+            except:
                 print("⚠️ Quantidade e preço devem ser números!")
                 continue
-             produto = Produto(proximo_id_produto, nome, quantidade, preco)
-             produtos.inserir(produto)
-             print("✅ Produto cadastrado com sucesso!")
-             print(produto)
-             proximo_id_produto += 1 
-            
+
+            if quantidade < 0:
+                print("⚠️ Quantidade não pode ser negativa!")
+                continue
+
+            if preco <= 0:
+                print("⚠️ Preço deve ser maior que zero!")
+                continue
+
+            produto = Produto(proximo_id_produto, nome, quantidade, preco)
+            produtos.inserir(produto)
+
+            print("✅ Produto cadastrado com sucesso!")
+            print(produto)
+
+            proximo_id_produto += 1
 
         elif opcao == 4:
             print("\n--- Lista de Produtos ---")
             produtos.listar()
+
+        # ================= OUTRAS OPÇÕES =================
 
         elif opcao == 5:
             print("Pesquisar produto")
