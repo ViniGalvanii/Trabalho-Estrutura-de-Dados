@@ -93,10 +93,23 @@ def main():
             print("\n--- Lista de Produtos ---")
             produtos.listar()
 
-        # ================= OUTRAS OPÇÕES =================
+            if produtos.inicio is None:
+                print("⚠️ Nenhum produto cadastrado!")      
 
         elif opcao == 5:
-            print("Pesquisar produto")
+            try:
+                id_pesquisa = int(input("Digite o ID do produto para pesquisar: "))
+            except:
+                print("⚠️ ID deve ser um número!")
+                continue
+
+            produto_encontrado = produtos.buscar_por_id(id_pesquisa)
+
+            if produto_encontrado:
+                print("✅ Produto encontrado:")
+                print(produto_encontrado)
+            else:
+                print("⚠️ Produto não encontrado!")
 
         elif opcao == 6:
             print("Realizar venda")

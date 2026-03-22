@@ -9,7 +9,7 @@ class ListaEncadeada:
         self.inicio = None
 
     def inserir(self, dado):
-        novo = No(dado)
+        novo = No(dado)  
 
         if self.inicio is None:
             self.inicio = novo
@@ -29,3 +29,13 @@ class ListaEncadeada:
         while atual:
             print(atual.dado)
             atual = atual.proximo
+
+    def buscar_por_id(self, id):
+        atual = self.inicio
+
+        while atual:
+            if atual.dado.id == id:
+                return atual.dado
+            atual = atual.proximo
+
+        return None
