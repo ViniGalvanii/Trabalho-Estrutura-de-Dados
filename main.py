@@ -1,6 +1,8 @@
 from cliente import Cliente
 from ListaEncadeada import ListaEncadeada
 from produto import Produto
+from venda import Venda
+from fila import Fila
 
 
 def exibir_menu():
@@ -26,6 +28,9 @@ def main():
 
     produtos = ListaEncadeada()
     proximo_id_produto = 1
+
+    fila_vendas = Fila()
+    proximo_id_venda = 1
 
     while True:
         exibir_menu()
@@ -112,10 +117,48 @@ def main():
                 print("⚠️ Produto não encontrado!")
 
         elif opcao == 6:
-            print("Realizar venda")
+            try:
+                id_cliente = int(input("Digite o ID do cliente: "))
+                id_produto = int(input("Digite o ID do produto: "))
+                quantidade = int(input("Digite a quantidade: "))
+            except:
+                print("⚠️ IDs e quantidade devem ser números!")
+                continue
+
+            cliente = clientes.buscar_por_id(id_cliente)
+            produto = produtos.buscar_por_id(id_produto)
+
+            if not cliente:
+              print("⚠️ Cliente não encontrado!")
+              continue
+
+            if not produto:
+              print("⚠️ Produto não encontrado!")
+              continue
+
+            if quantidade <= 0:
+              print("⚠️ Quantidade deve ser maior que zero!")
+              continue
+
+            if quantidade > produto.quantidade:
+              print("⚠️ Quantidade insuficiente em estoque!")
+              continue
+
+            produto.quantidade -= quantidade
+
+            venda = Venda(proximo_id_venda, cliente, produto, quantidade)
+
+            fila_vendas.enqueue(venda)
+            print("✅ Venda realizada com sucesso!")
+            print(venda)
+
+            proximo_id_venda += 1
+
 
         elif opcao == 7:
-            print("Ver vendas")
+            print("\n--- Fila de Vendas ---")
+            fila_vendas.listar()
+
 
         elif opcao == 8:
             print("Desfazer operação")
