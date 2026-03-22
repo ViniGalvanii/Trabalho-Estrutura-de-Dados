@@ -3,6 +3,7 @@ from ListaEncadeada import ListaEncadeada
 from produto import Produto
 from venda import Venda
 from fila import Fila
+from pilha import Pilha
 
 
 def exibir_menu():
@@ -31,6 +32,8 @@ def main():
 
     fila_vendas = Fila()
     proximo_id_venda = 1
+
+    pilha_operacoes = Pilha()
 
     while True:
         exibir_menu()
@@ -149,10 +152,14 @@ def main():
             venda = Venda(proximo_id_venda, cliente, produto, quantidade)
 
             fila_vendas.enqueue(venda)
+            pilha_operacoes.push(venda)
+
             print("✅ Venda realizada com sucesso!")
             print(venda)
 
             proximo_id_venda += 1
+
+            
 
 
         elif opcao == 7:
@@ -161,7 +168,18 @@ def main():
 
 
         elif opcao == 8:
-            print("Desfazer operação")
+            ultima = pilha_operacoes.pop()
+
+            if not ultima:
+             print("⚠️ Nada para desfazer.")
+            else:
+                ultima.produto.quantidade += ultima.quantidade
+                print("✅ Última venda desfeita:")
+                print(ultima)
+
+
+
+            
 
         elif opcao == 9:
             print("Total estoque")
