@@ -5,3 +5,6 @@ class Cliente:
 
     def __str__(self):
         return f"ID: {self.id} | Nome: {self.nome}"
+
+
+        
