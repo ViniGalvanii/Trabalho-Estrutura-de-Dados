@@ -209,8 +209,19 @@ def main():
             total = fila_vendas.calcular_total_vendas()
             print(f"\nValor total de vendas: R${total:.2f}")
 
+
         elif opcao == 11:
-            print("Clientes e gastos")
+            print("\n--- Clientes e Valores Gastos ---")
+
+            gastos = fila_vendas.calcular_gastos_por_cliente()
+
+            if not gastos:
+                print("⚠️ Nenhuma venda realizada.")
+                continue
+
+            for cliente, total in gastos.items():
+                print(f"Cliente: {cliente} | Total gasto: R${total:.2f}")
+
 
         elif opcao == 12:
             print("Saindo do sistema...")

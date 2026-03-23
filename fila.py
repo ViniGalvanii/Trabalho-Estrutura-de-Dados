@@ -21,8 +21,15 @@ class Fila:
 
         return total
 
-    def dequeue(self):
-        if self.itens:
-            return self.itens.pop(0)
-        return None
+    def calcular_gastos_por_cliente(self):
+        gastos = {}
 
+        for venda in self.itens:
+            nome = venda.cliente.nome
+
+            if nome not in gastos:
+                gastos[nome] = 0
+
+            gastos[nome] += venda.valor_total
+
+        return gastos
